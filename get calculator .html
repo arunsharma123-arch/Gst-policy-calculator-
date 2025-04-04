@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GST Policy Impact Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 2rem; background-color: #f4f4f4; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; color: #333; }
+    label { display: block; margin-top: 1rem; font-weight: bold; }
+    input[type="number"] { width: 100%; padding: 0.5rem; margin-top: 0.5rem; box-sizing: border-box; }
+    button { margin-top: 1.5rem; width: 100%; padding: 0.7rem; background-color: #4CAF50; color: white; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; }
+    .result { margin-top: 1.5rem; font-weight: bold; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>GST Policy Impact Calculator</h2>
+    <label for="dal">Monthly expense on Pulses (₹)</label>
+    <input type="number" id="dal" placeholder="e.g., 1000" min="0">
+
+    <label for="rice">Monthly expense on Rice (₹)</label>
+    <input type="number" id="rice" placeholder="e.g., 800" min="0">
+
+    <label for="veggies">Monthly expense on Vegetables (₹)</label>
+    <input type="number" id="veggies" placeholder="e.g., 1200" min="0">
+
+    <button onclick="calculateGSTImpact()">Calculate Extra GST Expense</button>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function calculateGSTImpact() {
+      const dalInput = document.getElementById('dal').value;
+      const riceInput = document.getElementById('rice').value;
+      const veggiesInput = document.getElementById('veggies').value;
+
+      const dal = dalInput === '' ? 0 : parseFloat(dalInput);
+      const rice = riceInput === '' ? 0 : parseFloat(riceInput);
+      const veggies = veggiesInput === '' ? 0 : parseFloat(veggiesInput);
+
+      if (isNaN(dal) || isNaN(rice) || isNaN(veggies) || dal < 0 || rice < 0 || veggies < 0) {
+        document.getElementById('result').textContent = 'Please enter valid non-negative numbers for all fields.';
+        return;
+      }
+
+      const total = dal + rice + veggies;
+      const gstRate = 0.05;
+      const extraExpense = total * gstRate;
+
+      document.getElementById('result').textContent = `If 5% GST is applied, your monthly expenses would increase by ₹${extraExpense.toFixed(2)}.`;
+    }
+  </script>
+</body>
+</html>
